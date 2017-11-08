@@ -27,11 +27,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createMessage', (msg) => {
-    io.emit('newMessage', {
+    // io.emit('newMessage', {
+    //   from: msg.from,
+    //   text: msg.text,
+    //   createdAt: new Date().getTime()
+    // });
+
+    socket.broadcast.emit('newMessage', {
       from: msg.from,
       text: msg.text,
       createdAt: new Date().getTime()
-    });
+    })
   });
 
   socket.on('disconnect', () => {
