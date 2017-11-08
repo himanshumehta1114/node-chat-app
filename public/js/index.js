@@ -23,11 +23,18 @@
   // });
 
   socket.on('newMessage', function(msg) {
-    var formattedTime = moment(msg.createdAt).format('h:mm a');
-    var li = $('<li></li>');
-    li.text(`${msg.from} ${formattedTime} ${msg.text}`);
+    var template = $('#message-template').html();
+    var html = Mustache.render(template, {
+      text: msg.text,
+    });
 
-    $('#messages').append(li);
+    $('#messages').append(html);
+
+    // var formattedTime = moment(msg.createdAt).format('h:mm a');
+    // var li = $('<li></li>');
+    // li.text(`${msg.from} ${formattedTime} ${msg.text}`);
+    //
+    // $('#messages').append(li);
   });
 
   socket.on('newLocationMessage', function(msg) {
