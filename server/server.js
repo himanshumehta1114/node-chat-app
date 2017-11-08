@@ -11,7 +11,7 @@ const publicPath = path.join(__dirname, '../public')
 var server = http.createServer(app);
 var io = socketIO(server);
 
-const {generateMessage} = require('./utils/message');
+const {generateMessage,generateLocationMessage} = require('./utils/message');
 
 io.on('connection', (socket) => {
   console.log('new User connected');
@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createLocationMessage', (coords) => {
-    io.emit('newMessage', generateMessage('Admin', `${coords.latitude}, ${coords.longitude}`));
+    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
   });
 
   socket.on('disconnect', () => {
