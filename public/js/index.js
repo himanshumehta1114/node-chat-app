@@ -3,15 +3,15 @@
   socket.on('connect', function() {
     console.log('Connected to server');
 
-    socket.emit('createEmail', {
-      to: 'jen@example.com',
-      text: 'Hey is sent by client'
-    });
+    // socket.emit('createEmail', {
+    //   to: 'jen@example.com',
+    //   text: 'Hey is sent by client'
+    // });
 
-    socket.emit('createMessage', {
-      to: 'server',
-      text: 'Hey this is sent by client'
-    });
+    // socket.emit('createMessage', {
+    //   to: 'server',
+    //   text: 'Hey this is sent by client'
+    // });
   });
 
   socket.on('disconnect',function() {

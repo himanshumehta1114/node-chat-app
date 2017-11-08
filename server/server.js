@@ -13,17 +13,15 @@ var io = socketIO(server);
 
 io.on('connection', (socket) => {
   console.log('new User connected');
-
-  socket.emit('newEmail', {
-    from: 'mike@example.com',
-    text: 'Hey.Hello',
-    createdAt: 123
-  });
-
   socket.emit('newMessage', {
-    from: 'server',
-    text: 'this is sample message from server',
-    createdAt: 145
+    from: 'admin',
+    text: 'welcome to the chat app',
+    createdAt: new Date().getTime()
+  });
+  socket.broadcast.emit('newMessage', {
+    from: 'admin',
+    text: 'new user joined',
+    createdAt: new Date().getTime()
   });
 
   socket.on('createMessage', (msg) => {
@@ -33,11 +31,11 @@ io.on('connection', (socket) => {
     //   createdAt: new Date().getTime()
     // });
 
-    socket.broadcast.emit('newMessage', {
-      from: msg.from,
-      text: msg.text,
-      createdAt: new Date().getTime()
-    })
+    // socket.broadcast.emit('newMessage', {
+    //   from: msg.from,
+    //   text: msg.text,
+    //   createdAt: new Date().getTime()
+    // });
   });
 
   socket.on('disconnect', () => {
