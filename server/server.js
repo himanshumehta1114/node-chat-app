@@ -12,11 +12,20 @@ var server = http.createServer(app);
 var io = socketIO(server);
 
 const {generateMessage,generateLocationMessage} = require('./utils/message');
+const {isRealString} = require('./utils/validation');
 
 io.on('connection', (socket) => {
   console.log('new User connected');
   socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
+
+  socket.on('join', (params,callback) => {
+    if(!isRealString(params.name) || !isRealString(params.room)){
+      callback('Name and room name are required');
+    }
+
+    callback();
+  });
 
   socket.on('createMessage', (msg,callback) => {
     console.log('createMessage', msg);

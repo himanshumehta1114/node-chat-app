@@ -17,17 +17,16 @@
   }
 
   socket.on('connect', function() {
-    console.log('Connected to server');
+    var params = $.deparam(window.location.search);
 
-    // socket.emit('createEmail', {
-    //   to: 'jen@example.com',
-    //   text: 'Hey is sent by client'
-    // });
-
-    // socket.emit('createMessage', {
-    //   to: 'server',
-    //   text: 'Hey this is sent by client'
-    // });
+    socket.emit('join',params, function(err) {
+      if(err) {
+        alert(err);
+        window.location.href = '/';
+      }else {
+        console.log('No error');
+      }
+    });
   });
 
   socket.on('disconnect',function() {
