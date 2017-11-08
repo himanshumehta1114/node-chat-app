@@ -17,21 +17,21 @@ io.on('connection', (socket) => {
   socket.emit('newEmail', {
     from: 'mike@example.com',
     text: 'Hey.Hello',
-    createAt: 123
+    createdAt: 123
   });
 
   socket.emit('newMessage', {
     from: 'server',
     text: 'this is sample message from server',
-    createAt: 145
+    createdAt: 145
   });
 
   socket.on('createMessage', (msg) => {
-    console.log('Message from client', msg);
-  });
-
-  socket.on('createEmail', (newEmail) => {
-    console.log('createEmail', newEmail);
+    io.emit('newMessage', {
+      from: msg.from,
+      text: msg.text,
+      createdAt: new Date().getTime()
+    });
   });
 
   socket.on('disconnect', () => {
