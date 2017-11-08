@@ -40,3 +40,20 @@
 
     });
   });
+
+  var locationButton = $('#send-location');
+  locationButton.on('click', function() {
+    if(!navigator.geolocation) {
+      return alert('Location not supported by browser.');
+    }
+
+    navigator.geolocation.getCurrentPosition(function(position){
+      socket.emit('createLocationMessage', {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      });
+      console.log(position);
+    }, function() {
+      console.log('Unable to fetch location');
+    })
+  });
