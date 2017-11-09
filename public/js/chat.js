@@ -29,13 +29,19 @@
     });
   });
 
-  socket.on('disconnect',function() {
+  socket.emit('disconnect',function() {
     console.log('Disconnected from server');
   });
 
-  // socket.on('newEmail', function(email) {
-  //   console.log('New email', email);
-  // });
+  socket.on('updateUserList', function(users) {
+    var ol = $('<ol></ol>');
+
+    users.forEach(function(user){
+      ol.append($('<li></li>').text(user));
+    });
+
+    $('#users').html(ol);
+  });
 
   socket.on('newMessage', function(msg) {
     var formattedTime = moment(msg.createdAt).format('h:mm a');
